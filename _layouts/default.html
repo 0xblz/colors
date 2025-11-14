@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{ page.title }} - {{ page.description }}</title>
+    <meta name="description" content="{% if page.description %}{{ page.description }}{% endif %}">
+    <link rel="icon" type="image/png" href="{{ site.baseurl }}/assets/images/favicon.png">
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
+    <script src="https://kit.fontawesome.com/53df3a2a07.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+</head>
+<body class="{% if page.custom_class %}{{ page.custom_class }}{% endif %}">
+
+    <main>
+        {{ content }}
+    </main>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-355V4GHGSF"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-355V4GHGSF');
+    </script>
+    
+    {% if page.js_file %}
+        <script src="/assets/js/{{ page.js_file }}.js"></script>
+    {% endif %}
+    
+    <script src="/assets/js/script.js"></script>
+    
+</body>
+</html> 
