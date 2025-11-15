@@ -10,13 +10,91 @@
     <script src="https://kit.fontawesome.com/53df3a2a07.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
 </head>
 <body class="">
 
     <main>
         <div class="colors-container">
     <!-- Three.js will inject the canvas here -->
+</div>
+
+<div class="custom-gui">
+    <div class="gui-section">
+        <h3 class="gui-section-title">Harmony</h3>
+        <div class="gui-controls">
+            <div class="gui-control">
+                <label for="harmonyMode">Mode</label>
+                <select id="harmonyMode"></select>
+            </div>
+            <div class="gui-control-group">
+                <div class="gui-control">
+                    <label for="baseHue">Hue <span class="gui-control-value" id="baseHueValue">0</span></label>
+                    <input type="range" id="baseHue" min="0" max="360" step="1">
+                </div>
+                <div class="gui-control">
+                    <label for="saturation">Saturation <span class="gui-control-value" id="saturationValue">70</span></label>
+                    <input type="range" id="saturation" min="0" max="100" step="1">
+                </div>
+            </div>
+            <div class="gui-control-group">
+                <div class="gui-control">
+                    <label for="brightness">Brightness <span class="gui-control-value" id="brightnessValue">70</span></label>
+                    <input type="range" id="brightness" min="0" max="100" step="1">
+                </div>
+                <div class="gui-control">
+                    <label for="spread">Spread <span class="gui-control-value" id="spreadValue">30</span></label>
+                    <input type="range" id="spread" min="0" max="90" step="1">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="gui-section">
+        <h3 class="gui-section-title">Colors</h3>
+        <div class="gui-colors">
+            <div class="gui-color-item">
+                <label>Primary</label>
+                <div class="gui-color-wrapper">
+                    <input type="color" class="gui-color-input" id="color0">
+                    <div class="gui-color-checkmark"><i class="fas fa-check"></i></div>
+                </div>
+            </div>
+            <div class="gui-color-item">
+                <label>Secondary</label>
+                <div class="gui-color-wrapper">
+                    <input type="color" class="gui-color-input" id="color1">
+                    <div class="gui-color-checkmark"><i class="fas fa-check"></i></div>
+                </div>
+            </div>
+            <div class="gui-color-item">
+                <label>Tertiary</label>
+                <div class="gui-color-wrapper">
+                    <input type="color" class="gui-color-input" id="color2">
+                    <div class="gui-color-checkmark"><i class="fas fa-check"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="gui-section">
+        <h3 class="gui-section-title">Actions</h3>
+        <div class="gui-controls">
+            <div class="gui-control-group">
+                <button class="gui-button" id="generateBtn">Generate Palette</button>
+                <button class="gui-button" id="copyBtn">Copy Palette</button>
+            </div>
+            <div class="gui-control-group">
+                <div class="gui-checkbox">
+                    <input type="checkbox" id="whiteBackground">
+                    <label for="whiteBackground">White BG</label>
+                </div>
+                <div class="gui-checkbox">
+                    <input type="checkbox" id="shadowsEnabled">
+                    <label for="shadowsEnabled">Shadows</label>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
     </main>
     
