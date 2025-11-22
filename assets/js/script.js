@@ -300,6 +300,48 @@ const updateColorsFromHarmony = () => {
   updatePrimaryColorPicker();
 };
 
+// Generate only secondary colors, keeping primary color intact
+const updateSecondaryColorsFromHarmony = () => {
+  // Normalize values to 0-1 range for Three.js
+  const h = params.baseHue / 360;
+  const s = params.saturation / 100;
+  const l = params.brightness / 100;
+  const spread = params.spread / 360;
+
+  let secondaryColors = [];
+
+  switch (params.harmonyMode) {
+    case 'Analogous':
+      // Colors adjacent on the color wheel
+      secondaryColors = [
+        new THREE.Color().setHSL((h - spread + 1) % 1, s, l),
+        new THREE.Color().setHSL((h + spread) % 1, s, l)
+      ];
+      break;
+
+    case 'Complementary':
+      // Lighter variation + complementary color
+      const comp = (h + 0.5) % 1;
+      secondaryColors = [
+        new THREE.Color().setHSL(h, s * 0.8, l * 1.1), // Lighter variation
+        new THREE.Color().setHSL(comp, s, l)
+      ];
+      break;
+
+    case 'Triadic':
+      // Two colors evenly spaced from primary
+      secondaryColors = [
+        new THREE.Color().setHSL((h + 0.333) % 1, s, l),
+        new THREE.Color().setHSL((h + 0.667) % 1, s, l)
+      ];
+      break;
+  }
+
+  // Update only secondary colors (indices 1 and 2)
+  params.colors[1] = `#${secondaryColors[0].getHexString()}`;
+  params.colors[2] = `#${secondaryColors[1].getHexString()}`;
+};
+
 // Update color picker displays in GUI
 const updateGUIColors = () => {
   params.colors.forEach((color, i) => {
@@ -455,8 +497,11 @@ const setupHexInput = () => {
 
 // Update harmony colors from a primary color change
 const updateFromPrimaryColor = (colorValue) => {
-  // Convert picked color to HSL
-  const color = new THREE.Color(colorValue);
+  // Ensure the color value is properly formatted
+  const formattedColor = colorValue.toLowerCase();
+  
+  // Convert picked color to HSL for the sliders
+  const color = new THREE.Color(formattedColor);
   const hsl = {};
   color.getHSL(hsl);
 
@@ -465,9 +510,20 @@ const updateFromPrimaryColor = (colorValue) => {
   params.saturation = Math.round(hsl.s * 100);
   params.brightness = Math.round(hsl.l * 100);
 
-  // Update GUI and regenerate harmony
+  // Set the primary color directly to preserve the exact value
+  params.colors[0] = formattedColor;
+
+  // Update GUI sliders
   updateGUIValues();
-  updateColorsFromHarmony();
+  
+  // Regenerate only the secondary colors based on harmony
+  updateSecondaryColorsFromHarmony();
+  
+  // Update the shapes with new colors
+  shapes.forEach((shape, i) => shape.material.color.set(params.colors[i]));
+  updateBackgroundGradient();
+  updateGUIColors();
+  updatePrimaryColorPicker();
 };
 
 // Setup color pickers with click-to-copy functionality
