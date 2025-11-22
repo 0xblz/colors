@@ -28,7 +28,12 @@
             </div>
             <div class="gui-control">
                 <label for="hexInput">Hex Code</label>
-                <input type="text" id="hexInput" class="gui-hex-input" placeholder="#000000" maxlength="7">
+                <div class="gui-input-wrapper">
+                    <input type="text" id="hexInput" class="gui-hex-input" placeholder="#000000" maxlength="7">
+                    <button type="button" class="gui-paste-btn" id="pasteBtn" title="Paste from clipboard">
+                        <i class="fas fa-paste"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -127,6 +132,7 @@
     
     
     <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/paste.js"></script>
     
 </body>
 </html> 
