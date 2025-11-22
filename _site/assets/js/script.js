@@ -42,9 +42,9 @@ const params = {
     navigator.clipboard.writeText(formatted).then(() => {
       const btn = document.getElementById('copyBtn');
       if (btn) {
-        const original = btn.textContent;
-        btn.textContent = 'Copied!';
-        setTimeout(() => (btn.textContent = original), COPY_FEEDBACK_DURATION);
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fa fa-check"></i> Copied!';
+        setTimeout(() => (btn.innerHTML = original), COPY_FEEDBACK_DURATION);
       }
     });
   },
