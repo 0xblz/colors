@@ -18,15 +18,17 @@
 
     <link rel="icon" type="image/png" href="https://blaze.design/assets/images/colors.png">
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
+    
+    <!-- Tippy.js -->
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    
     <script src="https://kit.fontawesome.com/53df3a2a07.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
 </head>
 <body class="{% if page.custom_class %}{{ page.custom_class }}{% endif %}">
-
-    <main>
-        {{ content }}
-    </main>
+    {{ content }}
     
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-355V4GHGSF"></script>
@@ -43,6 +45,21 @@
     
     <script src="/assets/js/script.js"></script>
     <script src="/assets/js/paste.js"></script>
+    
+    <!-- Initialize Tippy for logo -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logo = document.querySelector('.logo');
+            if (logo) {
+                tippy(logo, {
+                    content: '{{ page.title }}',
+                    placement: 'bottom',
+                    arrow: true,
+                    theme: 'custom'
+                });
+            }
+        });
+    </script>
     
 </body>
 </html> 

@@ -12,6 +12,10 @@ html, body {
     font-family: var(--font-family);
 }
 
+body {
+    position: relative;
+}
+
 .colors-container {
     width: calc(100vw - 20rem);
     height: 100vh;
@@ -22,4 +26,38 @@ html, body {
         height: 40vh;
     }
 }
-  
+
+.logo {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.75rem;
+    background: url('https://blaze.design/assets/images/colors.png') no-repeat center center;
+    background-size: cover;
+    z-index: 999;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        border-color: rgba(255, 255, 255, 0.4);
+        transform: scale(1.05);
+    }
+}
+
+// Tippy tooltip custom theme
+.tippy-box[data-theme~='custom'] {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 500;
+    backdrop-filter: blur(0.5rem);
+    -webkit-backdrop-filter: blur(0.5rem);
+    
+    .tippy-content {
+        padding: 0.5rem 0.75rem;
+    }
+}
