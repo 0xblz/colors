@@ -16,8 +16,8 @@ const COPY_FEEDBACK_DURATION = 1000;
 
 // Main application parameters
 const params = {
-  colors: ['#a1fa42', '#42a1fa', '#fa42a0'],
-  harmonyMode: 'Triadic',
+  colors: ['#fc91e1', '#fc91ac', '#fcac91'],
+  harmonyMode: 'Analogous',
   baseHue: 0,
   saturation: 70,
   brightness: 70,
@@ -33,6 +33,7 @@ const params = {
 
     updateGUIValues();
     updateColorsFromHarmony();
+    updatePrimaryColorPicker();
   },
 
   // Copy all colors to clipboard with user feedback
@@ -69,7 +70,7 @@ const getResponsiveValues = () => {
   return {
     sphereRadius: isMobile ? 1.1 : 1.2,
     spacing: isMobile ? 2.5 : 3,
-    cameraZ: isMobile ? 12 : 10
+    cameraZ: isMobile ? 6 : 10
   };
 };
 
@@ -296,6 +297,7 @@ const updateColorsFromHarmony = () => {
   shapes.forEach((shape, i) => shape.material.color.set(params.colors[i]));
   updateBackgroundGradient();
   updateGUIColors();
+  updatePrimaryColorPicker();
 };
 
 // Update color picker displays in GUI
@@ -304,6 +306,15 @@ const updateGUIColors = () => {
     const colorInput = document.getElementById(`color${i}`);
     if (colorInput) colorInput.value = color;
   });
+};
+
+// Update primary color picker and hex input
+const updatePrimaryColorPicker = () => {
+  const picker = document.getElementById('primaryColorPicker');
+  const hexInput = document.getElementById('hexInput');
+  
+  if (picker) picker.value = params.colors[0];
+  if (hexInput) hexInput.value = params.colors[0].toUpperCase();
 };
 
 // Update all GUI slider values
@@ -394,6 +405,71 @@ const setupHarmonyDropdown = () => {
   });
 };
 
+// Setup primary color picker
+const setupPrimaryColorPicker = () => {
+  const picker = document.getElementById('primaryColorPicker');
+  if (!picker) return;
+
+  // Initialize with first color
+  picker.value = params.colors[0];
+
+  picker.addEventListener('input', (e) => {
+    updateFromPrimaryColor(e.target.value);
+  });
+};
+
+// Setup hex input field
+const setupHexInput = () => {
+  const hexInput = document.getElementById('hexInput');
+  if (!hexInput) return;
+
+  // Initialize with first color
+  hexInput.value = params.colors[0].toUpperCase();
+
+  // Update as user types
+  hexInput.addEventListener('input', (e) => {
+    let value = e.target.value.trim();
+    
+    // Auto-add # if missing
+    if (value && !value.startsWith('#')) {
+      value = '#' + value;
+      hexInput.value = value;
+    }
+    
+    // Validate and update if valid hex
+    if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+      updateFromPrimaryColor(value);
+    }
+  });
+
+  // Format on blur
+  hexInput.addEventListener('blur', (e) => {
+    let value = e.target.value.trim();
+    if (!value.startsWith('#')) {
+      value = '#' + value;
+    }
+    // Ensure uppercase
+    hexInput.value = value.toUpperCase();
+  });
+};
+
+// Update harmony colors from a primary color change
+const updateFromPrimaryColor = (colorValue) => {
+  // Convert picked color to HSL
+  const color = new THREE.Color(colorValue);
+  const hsl = {};
+  color.getHSL(hsl);
+
+  // Update params
+  params.baseHue = Math.round(hsl.h * 360);
+  params.saturation = Math.round(hsl.s * 100);
+  params.brightness = Math.round(hsl.l * 100);
+
+  // Update GUI and regenerate harmony
+  updateGUIValues();
+  updateColorsFromHarmony();
+};
+
 // Setup color pickers with click-to-copy functionality
 const setupColorDisplays = () => {
   params.colors.forEach((color, i) => {
@@ -444,6 +520,10 @@ const copyColorToClipboard = (colorIndex) => {
 
 // Initialize all GUI controls
 const setupGUI = () => {
+  // Primary color controls
+  setupPrimaryColorPicker();
+  setupHexInput();
+
   // Dropdown
   setupHarmonyDropdown();
 
