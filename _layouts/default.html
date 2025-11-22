@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{{ page.title }} - {{ page.description }}</title>
+    <title>{{ page.title }}</title>
     <meta name="description" content="{% if page.description %}{{ page.description }}{% endif %}">
+
+
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.description }}">
+    <meta property="og:image" content="assets/images/og.png">
+    <meta property="og:url" content="https://colors.blaze.design">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page.title }}">
+    <meta name="twitter:description" content="{{ page.description }}">
+    <meta name="twitter:image" content="assets/images/og.png">
+
     <link rel="icon" type="image/png" href="https://blaze.design/assets/images/colors.png">
     <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
     <script src="https://kit.fontawesome.com/53df3a2a07.js" crossorigin="anonymous"></script>
